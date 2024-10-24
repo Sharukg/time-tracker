@@ -1,0 +1,6 @@
+<h1>Time Logs</h1>
+<ul>
+  {% for log in time_logs %}
+    <li>{{ log.start_time }} to {{ log.end_time }} for {{ log.task.name }}</li>
+  {% endfor %}
+</ul>
