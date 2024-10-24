@@ -1,13 +1,41 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+        stage('Clone repository') {
             steps {
-                // Make sure the correct branch is specified
-                git branch: '154-DevOps', url: 'https://github.com/Sharukg/time-tracker.git'
+                // Clone the GitHub repository
+                git branch: 'main', url: 'https://github.com/Sharukg/time-tracker.git'
             }
         }
-        // other stages...
+        stage('Build') {
+            steps {
+                // Commands for building the application
+                echo 'Building the application...'
+                sh 'mvn clean install'  // Assuming this is a Maven project
+            }
+        }
+        stage('Test') {
+            steps {
+                // Commands for running tests
+                echo 'Running tests...'
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Commands for deployment
+                echo 'Deploying the application...'
+                // You can add deployment steps here, for example:
+                // sh 'bash deploy.sh'
+            }
+        }
     }
-}
+    post {
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
 }
